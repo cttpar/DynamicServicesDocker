@@ -6,7 +6,7 @@ services:
     ports:
       - 8090:80
     build:
-      context: ./cttp-symfony-application
+      context: ./backend
       dockerfile: Dockerfile
     volumes:
       - ./cttp-symfony-application:/var/www/cttp-symfony-application

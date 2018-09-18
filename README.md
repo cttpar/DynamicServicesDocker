@@ -28,84 +28,47 @@
 ```
 mkdir ~/projects
 cd ~/projects
-git clone ssh://gituser@fortytwo.ddns.uark.edu/diffusion/S/cttp-symfony-application.git
-mv cttp-symfony-application cttp
-cd cttp
+git clone ssh://gituser@fortytwo.ddns.uark.edu/diffusion/SDW/symfony-docker-wrapper.git
+cd symfony-docker-wrapper
 cp .env.dist .env
-cp .arcconfig.dist .arcconfig
+git submodule update --init
 ```
 
-In the docker/backend folder, create an auth directory. Now create a `.arcrc` file with these contents:
-
-```
-{
-  "hosts": {
-    "http://gituser@fortytwo.ddns.uark.edu/api/": {
-      "token": "YOURTOKENHERE"
-    }
-  }
-}
-
-```
-
-Now navigate to http://fortytwo.ddns.uark.edu/conduit/login/ and replace "YOURTOKENHERE" in `.arcrc` with the token given at that url.
-
-You must also put your ssh private key (usually id_rsa) in this docker/backend/auth folder.
-
-```
-docker-compose up -d
-```
-
-- While your containers are being built, go ahead and navigate to your .env file and update the following fields:
+- Go ahead and navigate to your .env file and update the following fields:
  - Required:
   - SMTP_ACCOUNT - with a gmail account you'd be comfortable sending automated emails from
   - SMTP_PASSWORD - the password of said gmail account
-  - PRIVATEKEYNAME - the name of the ssh key file you generated (usually id_rsa)
- - Optional, but strongly encouraged - use https://randomkeygen.com CodeIgniter Encryption Keys for the following:
+ - Optional, but strongly encouraged - use https://randomkeygen.com "CodeIgniter Encryption Keys" for the following:
   - Update MYSQL_PASSWORD and PMA_PASSWORD using the same password
    - (MYSQL_PASSWORD should be the same as PMA_PASSWORD)
   - Update MYSQL_ROOT_PASSWORD
   - Update SYMFONY_SECRET
   - Update SYMFONY_API_KEY
-- Now open Kitematic (right click docker icon, kitematic), click the cttp_backend, and click exec and run the following:
 
 ```
+docker-compose up -d
+```
+
+- goto localhost:8080, import your db data, then proceed
+
+```
+docker exec -ti cttp_backend bash
+./init.sh
 a2enmod rewrite
 service apache2 restart
 ```
 
 - Since the container sole purpose is to run apache, you'll notice the container has stopped.
-- In your Kitematic window, click cttp_backend, click restart, and then run the following:
-
-**You can also run ./init.sh in the exec in the CTTP_backend container if you do not want to manualy run these commands.**
-```
-usermod -u 1000 www-data
-chown -R www-data:www-data /var/www/app/cache
-chown -R www-data:www-data /var/www/app/logs
-composer install
-app/console c:c --no-warmup
-app/console a:d
-app/console d:s:u --dump-sql --force
-```
-
-***Note: If your diffs are showing up as someone who is not you, this command will fix that.***
-
-**FYI: Once you reset your docker containers you will need to run this command again.**
 
 ```
-arc install-certificate
+docker container start cttp_backend
 ```
 
-- You'll be prompted with some instructions to follow a link to our server, do this and then continue.
-- After following the prompt, execute the following commands:
+- You must also put/copy your ssh private key (usually id_rsa - the one you just generated) in auth/.ssh/ folder.
+- Lastly, exec into the cttp_backend container and tell git who you are
 
 ```
-docker cp cttp_backend:/root/.arcrc ~/.arcrc
-```
-
-- Lastly, in the cttp-symfony-application repo, tell git who you are
-
-```
+docker exec -ti cttp_backend bash
 git config --local user.name "YOUR PHABRICATOR USER NAME"
 git config --local user.email "YOUR PHABRICATOR EMAIL"
 ```
