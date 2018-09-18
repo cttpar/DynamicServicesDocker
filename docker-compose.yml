@@ -1,0 +1,38 @@
+version: '3.5'
+services:
+
+  backend:
+    container_name: cttp_backend
+    ports:
+      - 8090:80
+    build:
+      context: ./cttp-symfony-application
+      dockerfile: Dockerfile
+    volumes:
+      - ./cttp-symfony-application:/var/www/cttp-symfony-application
+      - ./.git:/var/www/.git
+      - ./auth:/root/
+    env_file:
+      - .env
+
+  mysql:
+    container_name: cttp_mysql
+    ports:
+      - 3330:3306
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    env_file:
+      - .env
+
+  phpmyadmin:
+    container_name: cttp_phpmyadmin
+    ports:
+      - 8080:80
+    build:
+      context: ./phpmyadmin
+      dockerfile: Dockerfile
+    env_file:
+      - .env

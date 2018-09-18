@@ -1,0 +1,3 @@
+[submodule "cttp-symfony-application"]
+	path = cttp-symfony-application
+	url = ssh://gituser@fortytwo.ddns.uark.edu/diffusion/S/cttp-symfony-application.git
