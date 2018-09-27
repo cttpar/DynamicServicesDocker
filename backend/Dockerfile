@@ -37,7 +37,7 @@ RUN cd /var && git clone https://github.com/phacility/arcanist.git
 
 # Add some utils to the path
 ENV PATH="/var/arcanist/bin:${PATH}"
-ENV PATH="/var/www/bin:${PATH}"
+ENV PATH="/var/www/cttp-symfony-application/bin:${PATH}"
 
 # Expose the default apache port
 EXPOSE 80
