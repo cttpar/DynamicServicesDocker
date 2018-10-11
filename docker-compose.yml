@@ -4,7 +4,7 @@ services:
   backend:
     container_name: cttp_backend
     ports:
-      - 8090:80
+      - 8000:8000
     build:
       context: ./backend
       dockerfile: Dockerfile
