@@ -69,5 +69,4 @@ ENV PATH="/var/www/cttp-symfony-application/bin:${PATH}"
 
 # Expose php webserver port
 EXPOSE 8000
-
-CMD app/console server:run 0.0.0.0:8000
+CMD if [ "$COMPOSER_INSTALL_ON_START" = "1" ]; then composer install; fi; app/console server:run 0.0.0.0:8000
