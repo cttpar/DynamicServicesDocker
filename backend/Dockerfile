@@ -1,9 +1,12 @@
-FROM php:7.1-stretch
+FROM php:7.1-apache
 
 MAINTAINER ramity "github.com/ramity"
 
 # configure php
 COPY ./config/php.ini /usr/local/etc/php/
+
+# configure apache
+COPY ./config/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 # set up directory
 WORKDIR /var/www/cttp-symfony-application/
@@ -67,6 +70,6 @@ RUN cd /var && git clone https://github.com/phacility/arcanist.git
 ENV PATH="/var/arcanist/bin:${PATH}"
 ENV PATH="/var/www/cttp-symfony-application/bin:${PATH}"
 
-# Expose php webserver port
-EXPOSE 8000
-CMD if [ "$COMPOSER_INSTALL_ON_START" = "1" ]; then composer install; fi; app/console server:run 0.0.0.0:8000
+# Expose apache port
+EXPOSE 80
+CMD apache2-foreground
