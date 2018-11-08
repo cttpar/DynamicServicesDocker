@@ -11,7 +11,8 @@ services:
     volumes:
       - ./cttp-symfony-application:/var/www/cttp-symfony-application
       - ./.git:/var/www/.git
-      - ./auth:/root/
+      - ./auth:/root
+      - ./auth:/var/www
     env_file:
       - .env
 

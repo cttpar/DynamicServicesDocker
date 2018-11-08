@@ -7,6 +7,8 @@ COPY ./config/php.ini /usr/local/etc/php/
 
 # configure apache
 COPY ./config/apache.conf /etc/apache2/sites-enabled/000-default.conf
+COPY ./config/ports.conf /etc/apache2/ports.conf
+
 
 # set up directory
 WORKDIR /var/www/cttp-symfony-application/
