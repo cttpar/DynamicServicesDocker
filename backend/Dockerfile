@@ -71,5 +71,5 @@ ENV PATH="/var/arcanist/bin:${PATH}"
 ENV PATH="/var/www/cttp-symfony-application/bin:${PATH}"
 
 # Expose apache port
-EXPOSE 80
-CMD apache2-foreground
+EXPOSE 8000
+CMD chown www-data:www-data -R /var/www; a2enmod rewrite; apache2-foreground
