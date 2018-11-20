@@ -72,6 +72,10 @@ RUN cd /var && git clone https://github.com/phacility/arcanist.git
 ENV PATH="/var/arcanist/bin:${PATH}"
 ENV PATH="/var/www/cttp-symfony-application/bin:${PATH}"
 
+# Update www-data to use the same userid as the non-root host user
+RUN usermod -u 1000 www-data
+RUN usermod -G staff www-data
+
 # Expose apache port
 EXPOSE 8000
 CMD chown www-data:www-data -R /var/www; a2enmod rewrite; apache2-foreground
