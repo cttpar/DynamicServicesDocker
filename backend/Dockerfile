@@ -21,6 +21,7 @@ RUN apt-get install -y wget
 RUN apt-get install -y zip
 RUN apt-get install -y unzip
 RUN apt-get install -y libldap2-dev
+RUN apt-get install -y chromium
 
 # install php extensions
 RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/
