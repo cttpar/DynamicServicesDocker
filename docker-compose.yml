@@ -37,3 +37,11 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+
+  chromium:
+    container_name: cttp_chromium
+    ports:
+      - 6969:6969
+    build:
+      context: ./chromium
+      dockerfile: Dockerfile
