@@ -35,6 +35,8 @@ services:
     build:
       context: ./phpmyadmin
       dockerfile: Dockerfile
+    volumes:
+      - ./backend/config/php.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
     env_file:
       - .env
 
