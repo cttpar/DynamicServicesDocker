@@ -9,7 +9,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./cttp-symfony-application:/var/www/cttp-symfony-application
+      - ./cttp-symfony-application:/var/www/cttp-symfony-application:delegated
       - ./.git:/var/www/.git
       - ./auth:/root
       - ./auth:/var/www
@@ -24,7 +24,7 @@ services:
       context: ./mysql
       dockerfile: Dockerfile
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      - ./mysql/data:/var/lib/mysql:delegated
     env_file:
       - .env
 
